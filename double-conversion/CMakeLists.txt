@@ -23,6 +23,12 @@ strtod.cc
 ${headers}
 )
 
+include(CheckCXXCompilerFlag)
+check_cxx_compiler_flag(-fPIC CXX_HAS_FPIC)
+if(CXX_HAS_FPIC AND CMAKE_SYSTEM_PROCESSER STREQUAL "x86_64")
+  set_target_properties(double-conversion PROPERTIES COMPILE_FLAGS "-fPIC")
+endif()
+
 target_include_directories(double-conversion PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/..>)
 
 #
